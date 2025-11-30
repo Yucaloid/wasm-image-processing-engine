@@ -212,7 +212,7 @@
     cursor: pointer;
 }
 
-/* Full Mode Canvas */
+
 .editor-canvas.full-mode {
     cursor: default;
     box-shadow: 0 0 150px rgba(255, 255, 255, 0.1);
