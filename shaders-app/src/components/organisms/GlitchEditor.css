@@ -1,0 +1,196 @@
+/* GlitchEditor.css */
+.glitch-editor-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+/* Sidebar Styling */
+.editor-sidebar {
+    width: 320px;
+    background-color: #111;
+    border-right: 1px solid #222;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #fff, #888);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* File Input Styling */
+.file-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.file-input {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #888;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-input:hover {
+    border-color: #555;
+    color: #ccc;
+}
+
+/* Effects Grid */
+.effects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+/* Main Content Area */
+.editor-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #050505;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.empty-state {
+    text-align: center;
+    color: #444;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+.editor-canvas {
+    max-width: 90%;
+    max-height: 90%;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    cursor: crosshair;
+    transition: transform 0.1s ease;
+}
+
+/* Loading State */
+.loading-screen {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    font-family: monospace;
+}
+
+/* Mode Toggle */
+.mode-toggle {
+    display: flex;
+    background: #1a1a1a;
+    border-radius: 8px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.mode-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #666;
+    padding: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.mode-btn:hover {
+    color: #ccc;
+}
+
+.mode-btn.active {
+    background: #333;
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Download Button */
+.download-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #fff, #ccc);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.2s ease;
+    margin-top: auto;
+}
+
+.download-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.download-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #333;
+    color: #666;
+}
+
+/* Full Mode Canvas */
+.editor-canvas.full-mode {
+    cursor: default;
+    box-shadow: 0 0 150px rgba(255, 255, 255, 0.1);
+}
