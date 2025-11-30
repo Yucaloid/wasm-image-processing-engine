@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback, type ChangeEvent, type MouseEvent } from 'react';
+import React, { useRef, useState, useEffect, useCallback, type ChangeEvent, type MouseEvent, type TouchEvent } from 'react';
 import { useGlitchEngine } from '../../utils/useGlitchEngine';
 import { EffectButton } from '../atoms/EffectButton';
 import { RangeSlider } from '../atoms/RangeSlider';
@@ -172,6 +172,29 @@ export const GlitchEditor: React.FC = () => {
     };
 
     /**
+     * @function handleTouchMove
+     * @brief Triggers the C++ render loop based on touch position (Bubble Mode only).
+     * @param e The touch event from the canvas.
+     */
+    const handleTouchMove = (e: TouchEvent<HTMLCanvasElement>): void => {
+        if (!imageUploaded || !engine || !wasmModule || !canvasRef.current) return;
+        if (editMode === 'full') return;
+
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        const x = (touch.clientX - rect.left) * scaleX;
+        const y = (touch.clientY - rect.top) * scaleY;
+
+        engine.renderFrame(x, y, radius, activeEffect, intensity);
+        renderToCanvas();
+    };
+
+    /**
      * @function handleDownload
      * @brief Downloads the current canvas content as a PNG.
      */
@@ -265,9 +288,14 @@ export const GlitchEditor: React.FC = () => {
                 )}
                 <canvas 
                     ref={canvasRef} 
-                    onMouseMove={handleMouseMove} 
+                    onMouseMove={handleMouseMove}
+                    onTouchMove={handleTouchMove}
+                    onTouchStart={handleTouchMove}
                     className={`editor-canvas ${editMode === 'full' ? 'full-mode' : ''}`}
-                    style={{ display: imageUploaded ? 'block' : 'none' }}
+                    style={{ 
+                        display: imageUploaded ? 'block' : 'none',
+                        touchAction: 'none' // Prevent scrolling while touching canvas
+                    }}
                 />
             </main>
         </div>

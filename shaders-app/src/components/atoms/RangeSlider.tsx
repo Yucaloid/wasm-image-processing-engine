@@ -10,8 +10,8 @@ interface RangeSliderProps {
 
 export const RangeSlider: React.FC<RangeSliderProps> = ({ label, value, min, max, onChange }) => {
     return (
-        <div style={{ marginBottom: '15px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#ccc', fontSize: '0.9rem' }}>
+        <div className="range-slider-container">
+            <div className="range-slider-header">
                 <label>{label}</label>
                 <span>{value}</span>
             </div>
@@ -21,7 +21,7 @@ export const RangeSlider: React.FC<RangeSliderProps> = ({ label, value, min, max
                 max={max}
                 value={value}
                 onChange={(e) => onChange(Number(e.target.value))}
-                style={{ width: '100%', accentColor: '#007bff' }}
+                className="range-slider-input"
             />
         </div>
     );

@@ -17,5 +17,8 @@ export default defineConfig(({ command }) => {
     // - En Dev: usa '/' (localhost:5173 normal)
     // - En Build: usa '/wasm-image-processing-engine/' (para GitHub Pages)
     base: isDev ? '/' : '/wasm-image-processing-engine/',
+    server: {
+      host: true
+    }
   }
 })
