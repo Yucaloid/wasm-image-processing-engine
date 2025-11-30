@@ -1,11 +1,16 @@
 # ⚡ GlitchCore: High-Performance Wasm Image Processor
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=github)](https://Yucaloid.github.io/wasm-image-processing-engine/)
 ![C++](https://img.shields.io/badge/Core-C++17-00599C?style=for-the-badge&logo=c%2B%2B)
 ![Wasm](https://img.shields.io/badge/Compiled_to-WebAssembly-654FF0?style=for-the-badge&logo=webassembly)
 ![React](https://img.shields.io/badge/Frontend-React_TS-61DAFB?style=for-the-badge&logo=react)
 ![Vite](https://img.shields.io/badge/Bundler-Vite-646CFF?style=for-the-badge&logo=vite)
 
 An experimental image processing engine that runs **C++ logic directly in the browser** via WebAssembly (Wasm). This project demonstrates how to perform computationally expensive CPU-bound algorithms (like sorting pixels, convolution matrices, or mathematical distortion) in real-time within a React application, bypassing the GPU limitations for logic-heavy operations.
+
+## 🔗 Live Demo
+
+👉 **[Click here to try the application](https://Yucaloid.github.io/wasm-image-processing-engine/)**
 
 ## 📸 Visual Effects Showcase
 
@@ -43,6 +48,8 @@ Unlike WebGL/Three.js which relies on the GPU for parallel rendering, this engin
 
 ## 📦 Installation & Setup
 
+This is a monorepo structure. The frontend logic resides in the `shaders-app` folder.
+
 1.  **Clone the repository**
 
     ```bash
@@ -50,9 +57,10 @@ Unlike WebGL/Three.js which relies on the GPU for parallel rendering, this engin
     cd wasm-image-processing-engine
     ```
 
-2.  **Install dependencies**
+2.  **Enter the frontend directory and install dependencies**
 
     ```bash
+    cd shaders-app
     npm install
     ```
 
@@ -62,7 +70,7 @@ Unlike WebGL/Three.js which relies on the GPU for parallel rendering, this engin
     npm run dev
     ```
 
-    _Open your browser at `http://localhost:5173` (or the port shown in terminal)._
+    _Open your browser at `http://localhost:5173`._
 
 > **Note:** The `.wasm` binary is pre-compiled in the `public/` folder. To recompile the C++ core yourself, you need the [Emscripten SDK](https://emscripten.org/docs/getting_started/downloads.html) installed.
 
