@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 // We import the JS file, but TypeScript will now use the .d.ts definition we created above.
 import createGlitchModule from './glitch_engine.js'; 
-import type { GlitchEngine, WasmModule } from '../types/glitch-engine';
+import type { GlitchEngine, WasmModule, GlitchModuleFactory } from '../types/glitch-engine';
 
 /**
  * @interface GlitchHookState
@@ -31,20 +31,28 @@ export const useGlitchEngine = (): GlitchHookState => {
         const initEngine = async (): Promise<void> => {
             try {
                 // The import 'createGlitchModule' is strictly typed as GlitchModuleFactory now.
-                const Module = await createGlitchModule({
-                    locateFile: (file: string): string => `/${file}`, 
-                });
+                const factory = createGlitchModule as unknown as GlitchModuleFactory;
 
-                console.log("✅ C++ Engine Initialized Successfully", Module);
+                const Module = await factory({
+                    // CRITICAL FIX FOR GITHUB PAGES:
+                    // Use Vite's BASE_URL to correctly locate the .wasm file in both
+                    // localhost ('/') and production ('/wasm-image-processing-engine/')
+                    locateFile: (file: string): string => {
+                        const baseURL = import.meta.env.BASE_URL;
+                        // Ensure we don't have double slashes if baseURL ends with /
+                        const prefix = baseURL.endsWith('/') ? baseURL : `${baseURL}/`;
+                        return `${prefix}${file}`;
+                    }, 
+                });
+                console.log("✅ C++ Engine Initialized Successfully");
                 
                 // Polyfill HEAPU8 if missing (common in some Emscripten builds)
                 if (!Module.HEAPU8) {
                     console.warn("⚠️ HEAPU8 missing on Module, attempting to polyfill...");
                     if (Module.wasmMemory) {
-                        console.log("Found Module.wasmMemory");
+                         // Type assertion to access distinct property
                         Module.HEAPU8 = new Uint8Array(Module.wasmMemory.buffer);
                     } else if (Module.buffer) {
-                        console.log("Found Module.buffer");
                         Module.HEAPU8 = new Uint8Array(Module.buffer);
                     } else {
                         console.error("❌ Could not find WebAssembly memory buffer!");
